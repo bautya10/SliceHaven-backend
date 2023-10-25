@@ -18,4 +18,4 @@ const reservesSchema = new Schema({
   
 })
 
-module.exports= model('Reserves', reserveSchema)
+module.exports= model('Reserves', reservesSchema)
