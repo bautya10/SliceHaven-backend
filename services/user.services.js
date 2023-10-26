@@ -13,6 +13,19 @@ const registerUserService = async ({userName, email, password, admin, suspended}
   return newUser;
 };
 
+const editUserService = async ({ userName, password }) => {
+  //Hasheo del password 
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  //Crear usuario
+  const newUser = await userSchema.findOneAndUpdate({ userName:userName}, {password:hashedPassword},{
+    new: true,});
+  if ((!newUser)) throw new Error('Hubo un error al editar el usuario');
+  
+  return newUser;
+}
+
 module.exports = {
-  registerUserService
+  registerUserService,
+  editUserService
 }

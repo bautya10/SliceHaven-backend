@@ -1,7 +1,9 @@
 const express = require('express');
-const { registerUser } = require('../controllers/user.controller');
+const { registerUser, editUser } = require('../controllers/user.controller');
 const route = express();
 
 route.post('/register', registerUser)
+
+route.patch('/', editUser)
 
 module.exports = route
