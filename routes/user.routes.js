@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, editUser, getAllUsers } = require('../controllers/user.controller');
+const { registerUser, loginUsers ,editUser, getAllUsers } = require('../controllers/user.controller');
 const route = express();
 // Ruta para obtener todos los usuarios
 route.get('/', getAllUsers);
@@ -7,5 +7,7 @@ route.get('/', getAllUsers);
 route.post('/register', registerUser);
 // Ruta para editar un usuario
 route.patch('/', editUser);
+//Ruta para loguear usuarios
+route.post('/login', loginUsers)
 
 module.exports = route;
