@@ -4,18 +4,18 @@ const { Schema, model } = require('mongoose');
 const reservesSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "Users",
-    require: true,
+    ref: "users",
+    required: true,
   },
   date: {
     type: Number,
-    require: true
+    required: true
   },
   time: {
     type: Number,
-    require: true,
+    required: true,
   },
   
 })
 
-module.exports= model('Reserves', reservesSchema)
+module.exports= model('reserves', reservesSchema)
