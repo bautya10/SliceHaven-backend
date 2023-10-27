@@ -4,20 +4,20 @@ const {createReserveServices, allReservesServices} = require('../services/reserv
 //controlador para crear una reserva 
 const createReserve = async (req, res) => {
   try {
-    await createReserveServices(req.body);
-    res.status(200).json({msj: 'reserva creada'})
+    const result = await createReserveServices(req.body);
+    res.status(200).json(result)
   } catch (error) {
-    res.estatus(500).json({msj: 'error'})
+    res.status(500).json(error)
   }
 }
 
 //controlador para traer todas las reservas
 const allReserves = async (req, res) => {
   try {
-    const all = await allReservesServices(req.body);
-    res.status(200).json({msj: 'reservas encontradas'})
+    const result = await allReservesServices(req.body);
+    res.status(200).json(result)
   } catch (error) {
-    res.estatus(500).json({msj: 'error'})
+    res.status(500).json(error)
   }
 }
 
