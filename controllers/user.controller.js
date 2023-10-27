@@ -1,4 +1,4 @@
-const { registerUserService, loginUserService, editUserService } = require("../services/user.services");
+const { registerUserService, loginUserService, editUserService, getAllUsersService } = require("../services/user.services");
 
 // Controlador para registrar un usuario
 const registerUser = async (req, res) => {
@@ -9,7 +9,7 @@ const registerUser = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
-
+// Controlador para loguear un usuario
 const loginUsers = async (req, res) => {
   try {
     const loguedUser = await loginUserService(req.body)
@@ -18,7 +18,7 @@ const loginUsers = async (req, res) => {
     res.status(500).json(error.message);
   }
 }
-
+// controlador para editar un usuario
 const editUser = async (req, res) => {
   try {
     const modifiedUser = await editUserService(req.body);
@@ -27,10 +27,20 @@ const editUser = async (req, res) => {
     res.status(400).json(error.message);
   }
 }
+// Controlador para traer usuarios
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await getAllUsersService(req.query)
+    res.status(200).json({ users })
+  } catch (error) {
+    res.status(500).json( error.message )
+  }
+}
 
 module.exports = {
   registerUser,
   editUser,
+  getAllUsers,
   loginUsers,
 }
 
