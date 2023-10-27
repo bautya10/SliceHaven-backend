@@ -1,4 +1,4 @@
-const { registerUserService, editUserService } = require("../services/user.services");
+const { registerUserService, editUserService, getAllUsersService } = require("../services/user.services");
 
 
 // Controlador para registrar un usuario
@@ -20,9 +20,19 @@ const editUser = async (req, res) => {
     res.status(400).json(error.message);
   }
 }
+// Controlador para traer usuarios
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await getAllUsersService(req.query)
+    res.status(200).json({ users })
+  } catch (error) {
+    res.status(500).json( error.message )
+  }
+}
 
 module.exports = {
   registerUser,
-  editUser
+  editUser,
+  getAllUsers
 }
 
