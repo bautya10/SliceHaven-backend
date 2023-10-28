@@ -42,6 +42,8 @@ const loginUserService = async ({userName, email, password}) => {
 
 };
 
+
+//Editar usuarios
 const editUserService = async ({ userName, password }) => {
   //Hasheo del password 
   const saltRounds = 10;
@@ -54,6 +56,7 @@ const editUserService = async ({ userName, password }) => {
   return newUser;
 }
 
+//Traer todos los usuarios
 const getAllUsersService = async ({ userName, email, admin, suspended }) => {
   // Query inicial
   let query = {};
