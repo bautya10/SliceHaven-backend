@@ -36,14 +36,15 @@ const  allReservesServices = async () => {
   return allReserves
 }
 // Funcion para eliminar reservas por id
-const deleteReservationsService = async ({_id}) => {
-  const reservationRemoved = await reservesModels.findByIdAndDelete({_id})
-  if(!reservationRemoved) throw new Error('no se pudo encontrar la reserva - sevices')
+const deleteReservesService = async (reserveId) => {
+  console.log(reserveId)
+  const reservationRemoved = await reservesModels.findByIdAndDelete(reserveId);
+  if(!reservationRemoved) throw new Error('no se pudo eliminar la reserva - sevices');
   return reservationRemoved;
-}
+};
 
 module.exports = { 
   createReserveServices,
   allReservesServices,
-  deleteReservationsService
+  deleteReservesService
 }
