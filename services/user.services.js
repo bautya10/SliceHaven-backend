@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
+const reservesModel = require('../models/reserves.model')
+const {deleteReservesService} = require('./reserves.services')
 const jwt = require('jsonwebtoken');
 
 //Registrar Usuarios
@@ -95,6 +97,11 @@ const getAllUsersService = async ({ userName, email, admin, suspended }) => {
 
 //Eliminar usuario
 const deleteUserService = async (userId) => {
+  const users = await User.findById(userId).populate("reserves");
+  console.log(users)
+  users.reserves.forEach(reserveId => {
+    deleteReservesService(reserveId._id)
+  }); 
   const userRemoved = await User.findByIdAndDelete(userId)
   if(!userRemoved) throw new Error('no se pudo eliminar el usuario')
   return userRemoved;
