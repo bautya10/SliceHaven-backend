@@ -1,4 +1,4 @@
-const { registerUserService, loginUserService, editUserService, getAllUsersService } = require("../services/user.services");
+const { registerUserService, loginUserService, editUserService, getAllUsersService, deleteUserService } = require("../services/user.services");
 
 // Controlador para registrar un usuario
 const registerUser = async (req, res) => {
@@ -18,7 +18,7 @@ const loginUsers = async (req, res) => {
     res.status(500).json(error.message);
   }
 }
-// controlador para editar un usuario
+// Controlador para editar un usuario
 const editUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -38,11 +38,22 @@ const getAllUsers = async (req, res) => {
     res.status(500).json( error.message )
   }
 }
+// Controlador para eliminar un usuario
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const users = await deleteUserService(userId);
+    res.status(200).json({message: "usuario eliminado con exito",users});
+  } catch (error) {
+    res.status(500).json( error.message );
+  }
+}
 
 module.exports = {
   registerUser,
   editUser,
   getAllUsers,
   loginUsers,
+  deleteUser,
 }
 
