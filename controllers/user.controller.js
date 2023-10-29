@@ -21,7 +21,9 @@ const loginUsers = async (req, res) => {
 // controlador para editar un usuario
 const editUser = async (req, res) => {
   try {
-    const modifiedUser = await editUserService(req.body);
+    const userId = req.params.userId;
+    const updatedUserData = req.body;
+    const modifiedUser = await editUserService(updatedUserData,userId);
     res.status(200).json({ modifiedUser });
   } catch (error) {
     res.status(400).json(error.message);
