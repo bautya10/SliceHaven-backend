@@ -74,7 +74,10 @@ const getAllUsersService = async ({ userName, email, admin, suspended }) => {
     query.suspended = suspended;
   }
   // Guardamos los usuarios encontrados
-  const users = await User.find(query);
+  const users = await User.find(query).populate({
+    path:'reserves',
+    select: 'date time'
+  });
   // Si no hay resultados devolvemos un error
   if (users.length === 0) {
     throw new Error("No se encontraron usuarios con los filtros seleccionados");
