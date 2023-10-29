@@ -29,7 +29,7 @@ app.listen(port, () => {
 
 // Definiendo rutas
 app.use('/users', userRoutes);
-app.use('/reservers', reserversRoutes)
+app.use('/reserves', reserversRoutes)
 
 // Conectando base de datos
 connection();
