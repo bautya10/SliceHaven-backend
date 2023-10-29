@@ -1,13 +1,27 @@
 //modulos necesarios
 const reservesModels = require('../models/reserves.model')
+const userModels = require('../models/user.model');
 
 //crear una reserva 
 const createReserveServices = async ({user,date,time}) => {
-  const newReserve = await reservesModels.create({
+
+  const newReserve = new reservesModels({
     user,
     date,
     time
   })
+
+  await newReserve.save();
+
+  const usuario = await userModels.findById(user)
+  
+  if(usuario){
+    usuario.reserves.push(newReserve._id)
+    await usuario.save()
+  }else{
+    throw new Error('no se pudo crear mas de 2 reservas - sevices')
+  }
+
   if(!newReserve) throw new Error('no se pudo crear la reserva - sevices')
   
   return newReserve
