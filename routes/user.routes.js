@@ -7,7 +7,7 @@ route.get('/', jwtValidator, getAllUsers);
 // Ruta para crear un nuevo usuario
 route.post('/register', registerUser);
 // Ruta para editar un usuario
-route.patch('/', editUser);
+route.patch('/:userId', editUser);
 // Ruta para loguear usuarios
 route.post('/login', loginUsers)
 // Ruta para eliminar usuarios

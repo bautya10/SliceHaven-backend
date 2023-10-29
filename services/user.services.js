@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
-const jwt = require ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 //Registrar Usuarios
-const registerUserService = async ({userName, email, password, admin, suspended}) => {
+const registerUserService = async ({ userName, email, password, admin, suspended }) => {
   // Hasheo del password
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   // Crear usuario
-  const newUser = await User.create({userName, email, password: hashedPassword, admin, suspended});
+  const newUser = await User.create({ userName, email, password: hashedPassword, admin, suspended });
   // Errores de hashing o almacenamiento
   if (!newUser) throw new Error('Hubo un error al crear el nuevo usuario');
 
@@ -16,20 +16,20 @@ const registerUserService = async ({userName, email, password, admin, suspended}
 };
 
 //Loguear Usuarios
-const loginUserService = async ({userName, email, password}) => {
+const loginUserService = async ({ userName, email, password }) => {
   let userFounded;
   const secretKey = process.env.SECRET_KEY;
 
-  if(userName) {
-    userFounded = await User.findOne({userName})
-  } else if (email){
-      userFounded = await User.findOne({email})
+  if (userName) {
+    userFounded = await User.findOne({ userName })
+  } else if (email) {
+    userFounded = await User.findOne({ email })
   }
-  if(!userFounded) throw new Error('Los datos ingresados no son válidos');
+  if (!userFounded) throw new Error('Los datos ingresados no son válidos');
 
   const passwordMatch = await bcrypt.compare(password, userFounded.password);
-  
-  if(!passwordMatch) throw new Error('Los datos ingresados no son válidos');
+
+  if (!passwordMatch) throw new Error('Los datos ingresados no son válidos');
 
   const payload = {
     userFounded,
@@ -38,21 +38,29 @@ const loginUserService = async ({userName, email, password}) => {
     expiresIn: '10h'
   });
 
-  return {token, userFounded}
+  return { token, userFounded }
 
 };
 
 
 //Editar usuarios
-const editUserService = async ({ userName, password }) => {
+const editUserService = async ({ userName, email, password, admin, suspended, reserves }, userId) => {
   //Hasheo del password 
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   //Crear usuario
-  const newUser = await User.findOneAndUpdate({ userName:userName}, {password:hashedPassword},{
-    new: true,});
+  const newUser = await User.findByIdAndUpdate(
+  userId,
+  {userName: userName,
+    email: email,
+    password: hashedPassword,
+    admin: admin,
+    suspended: suspended,
+    reserves: reserves
+  });
+
   if ((!newUser)) throw new Error('Hubo un error al editar el usuario');
-  
+
   return newUser;
 }
 
@@ -74,7 +82,10 @@ const getAllUsersService = async ({ userName, email, admin, suspended }) => {
     query.suspended = suspended;
   }
   // Guardamos los usuarios encontrados
-  const users = await User.find(query);
+  const users = await User.find(query).populate({
+    path: 'reserves',
+    select: 'date time'
+  });
   // Si no hay resultados devolvemos un error
   if (users.length === 0) {
     throw new Error("No se encontraron usuarios con los filtros seleccionados");
