@@ -11,10 +11,19 @@ const reservesSchema = new Schema({
     type: Number,
     required: true
   },
-  time: {
+  day: {
     type: Number,
     required: true,
   },
+  mounth: {
+    type: Number,
+    required: true,
+  },
+  people: {
+    type: Number,
+    required: true,
+  },
+
   
 })
 
