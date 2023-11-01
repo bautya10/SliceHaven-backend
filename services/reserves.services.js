@@ -45,12 +45,14 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
-const editUserService = async ({user,date,time}, reserveId) => {
+const editUserService = async ({ user,date,day,month,people}, reserveId) => {
 
   const modifiedReserve = await reservesModels.findByIdAndUpdate(reserveId,
     { user:user,
       date:date,
-      time:time
+      day:day,
+      month:month,
+      people:people
     });
 
     if ((!modifiedReserve)) throw new Error('Hubo un error al editar la reserva - service');
