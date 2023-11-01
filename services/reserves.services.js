@@ -43,8 +43,19 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
+//Funcion para encontrar las reservas del dia en el mes
+const reserveMonthDayService = async(reserveId) => {
+ const oneReserve = await reservesModels.findById(reserveId);
+  // const day = oneReserve.day
+  // const day = oneReserve.mounth
+ console.log(oneReserve)
+ if(!oneReserve) throw new Error('no se pudo encontrar las reserva - sevices')
+ return oneReserve
+}
+
 module.exports = { 
   createReserveServices,
   allReservesServices,
-  deleteReservesService
+  deleteReservesService,
+  reserveMonthDayService
 }
