@@ -1,5 +1,5 @@
 //modulos necesarios
-const {createReserveServices, allReservesServices, deleteReservesService, editUserService} = require('../services/reserves.services')
+const {createReserveServices, allReservesServices, deleteReservesService, editUserService,reserveDateService} = require('../services/reserves.services')
 
 //controlador para crear una reserva 
 const createReserve = async (req, res) => {
@@ -30,6 +30,15 @@ const deleteReserves = async (req, res) => {
     res.status(500).json(error.message)
   }
 }
+const reserveDate = async (req,res) => {
+  try {
+    const reserveId = req.params.reserveId;
+    const result = await reserveDateService(reserveId)
+    res.status(200).json({message: "reservas del dia encontrada con exito", result});
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+}
 
 const editReserves = async (req, res) => {
   try {
@@ -46,5 +55,6 @@ module.exports = {
   createReserve,
   allReserves,
   deleteReserves,
-  editReserves
+  editReserves,
+  reserveDate
 }

@@ -2,7 +2,7 @@
 const express = require('express')
 
 //controladores
-const { createReserve, allReserves, deleteReserves, editReserves} = require('../controllers/reserves.controller')
+const { createReserve, allReserves, deleteReserves, editReserves, reserveDate} = require('../controllers/reserves.controller')
 
 
 //instanciamos express
@@ -15,5 +15,6 @@ routesReserves.post('/reservesCreate', createReserve)
 routesReserves.get('/reservesAll', allReserves)
 routesReserves.delete('/:reserveId', deleteReserves)
 routesReserves.patch('/:reserveId', editReserves)
+routesReserves.get('/:reserveId', reserveDate)
 
 module.exports = routesReserves;
