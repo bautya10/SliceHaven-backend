@@ -34,7 +34,7 @@ const reserveDate = async (req,res) => {
   try {
     const reserveId = req.params.reserveId;
     const result = await reserveDateService(reserveId)
-    res.status(200).json({message: "reserva del dia encontrada con exito", result});
+    res.status(200).json({message: "reservas del dia encontrada con exito", result});
   } catch (error) {
     res.status(500).json(error.message)
   }
