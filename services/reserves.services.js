@@ -43,6 +43,23 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
+
+
+const editUserService = async ({user,date,time}, reserveId) => {
+
+  const modifiedReserve = await reservesModels.findByIdAndUpdate(reserveId,
+    { user:user,
+      date:date,
+      time:time
+    });
+
+    if ((!modifiedReserve)) throw new Error('Hubo un error al editar la reserva - service');
+
+    return modifiedReserve;
+
+}
+
+
 //Funcion para encontrar las reservas del dia en el mes
 const reserveMonthDayService = async(reserveId) => {
  const oneReserve = await reservesModels.findById(reserveId);
@@ -57,5 +74,6 @@ module.exports = {
   createReserveServices,
   allReservesServices,
   deleteReservesService,
+  editUserService,
   reserveMonthDayService
 }

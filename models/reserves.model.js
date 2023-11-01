@@ -8,14 +8,14 @@ const reservesSchema = new Schema({
     required: true,
   },
   date: {
-    type: Number,
+    type: String,
     required: true
   },
   day: {
     type: Number,
     required: true,
   },
-  mounth: {
+  month: {
     type: Number,
     required: true,
   },
