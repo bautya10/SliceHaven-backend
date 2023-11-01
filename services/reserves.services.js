@@ -61,7 +61,7 @@ const editUserService = async ({user,date,time}, reserveId) => {
 
 
 //Funcion para encontrar las reservas del dia en el mes
-const reserveMonthDayService = async(reserveId) => {
+const reserveDateService = async(reserveId) => {
  const oneReserve = await reservesModels.findById(reserveId);
   // const day = oneReserve.day
   // const day = oneReserve.mounth
@@ -75,5 +75,5 @@ module.exports = {
   allReservesServices,
   deleteReservesService,
   editUserService,
-  reserveMonthDayService
+  reserveDateService
 }
