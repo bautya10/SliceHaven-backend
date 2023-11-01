@@ -86,7 +86,7 @@ const getAllUsersService = async ({ userName, email, admin, suspended }) => {
   // Guardamos los usuarios encontrados
   const users = await User.find(query).populate({
     path: 'reserves',
-    select: 'date time'
+    select: 'date day month people'
   });
   // Si no hay resultados devolvemos un error
   if (users.length === 0) {
