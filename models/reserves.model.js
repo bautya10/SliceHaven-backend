@@ -15,7 +15,7 @@ const reservesSchema = new Schema({
     type: Number,
     required: true,
   },
-  mounth: {
+  month: {
     type: Number,
     required: true,
   },
