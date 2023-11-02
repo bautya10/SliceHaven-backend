@@ -45,7 +45,7 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
-const editUserService = async ({ user,date,day,month,people}, reserveId) => {
+const editReserveService = async ({ user,date,day,month,people}, reserveId) => {
 
   const modifiedReserve = await reservesModels.findByIdAndUpdate(reserveId,
     { user:user,
@@ -96,6 +96,6 @@ module.exports = {
   createReserveServices,
   allReservesServices,
   deleteReservesService,
-  editUserService,
+  editReserveService,
   reserveDateService
 }
