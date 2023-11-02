@@ -1,7 +1,7 @@
 const { z } = require("zod"); //nos va a permitir dar tipos de datos
 
 const registerSchema = z.object({
-  username: z.string({
+  userName: z.string({
     //primera validacion, debe ser un string
     required_error: "El nombre de usuario es requerido",
   })  
