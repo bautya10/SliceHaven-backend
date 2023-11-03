@@ -1,5 +1,8 @@
 const { z } = require("zod"); //nos va a permitir dar tipos de datos
 
+const userRegex = /^[a-zA-Z ]+$/
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+/
+
 const registerSchema = z.object({
   userName: z.string({
     //primera validacion, debe ser un string
@@ -8,7 +11,11 @@ const registerSchema = z.object({
   .min(2, {
     //minimo de caracteres
     message: "El nombre de usuario debe contener minimo 2 caracteres",
-  }),
+  })
+  .refine((value) => userRegex.test(value), {
+    message: "No se permiten caracteres especiales ni numeros"
+  })
+  ,
 
   email: z
     .string({
@@ -36,6 +43,9 @@ const registerSchema = z.object({
     .max(30, {
       //maximo de caracteres
       message: "La contraseña no debe contener mas de 30 caracteres",
+    })
+    .refine((value) => passwordRegex.test(value), {
+      message: "La contraseña debe contener al menos una mayuscula y un numero"
     })
 });
 
