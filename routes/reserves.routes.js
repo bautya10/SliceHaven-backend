@@ -15,6 +15,6 @@ routesReserves.post('/reservesCreate', createReserve)
 routesReserves.get('/reservesAll', allReserves)
 routesReserves.delete('/:reserveId', deleteReserves)
 routesReserves.patch('/:reserveId', editReserves)
-routesReserves.get('/:reserveId', reserveDate)
+routesReserves.get('/reserveDate/:reservationDay', reserveDate)
 
 module.exports = routesReserves;
