@@ -19,6 +19,10 @@ const reservesSchema = new Schema({
     type: Number,
     required: true,
   },
+  year: {
+    type: Number,
+    required: true,
+  },
   people: {
     type: Number,
     required: true,
