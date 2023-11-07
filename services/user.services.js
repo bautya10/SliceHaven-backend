@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 
 //Registrar Usuarios
 const registerUserService = async ({ userName, email, password, admin, suspended }) => {
+
+  const emailExist = await User.findOne({ email })
+  if (emailExist) throw new Error('exist');
+
   // Hasheo del password
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);

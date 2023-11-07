@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const {connection} = require('../db/connection')
+const cors = require('cors')
 
 //Definiendo rutas
 const userRoutes = require('../routes/user.routes')
@@ -21,6 +22,9 @@ app.use(express.json());
 
 //Configurar morgan
 app.use(morgan('dev'))
+
+//configuramos corse
+app.use(cors());
 
 // Escuchamos el puerto
 app.listen(port, () => {
