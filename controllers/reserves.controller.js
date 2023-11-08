@@ -32,14 +32,14 @@ const deleteReserves = async (req, res) => {
 }
 const reserveDate = async (req,res) => {
   try {
-    const reserveId = req.params.reserveId;
-    const result = await reserveDateService(reserveId)
+    const reservationDay = req.params.reservationDay
+    const result = await reserveDateService(reservationDay)
     res.status(200).json({message: "reservas del dia encontrada con exito", result});
   } catch (error) {
     res.status(500).json(error.message)
   }
 }
-
+ 
 const editReserves = async (req, res) => {
   try {
     const reserveId = req.params.reserveId;
