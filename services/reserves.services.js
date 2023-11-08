@@ -3,13 +3,14 @@ const reservesModels = require('../models/reserves.model')
 const userModels = require('../models/user.model');
 
 //crear una reserva 
-const createReserveServices = async ({user,date,day,month,people}) => {
+const createReserveServices = async ({user,date,day,month,people,year}) => {
 
   const newReserve = new reservesModels({
     user,
     date,
     day,
     month,
+    year,
     people
   })
 
