@@ -45,7 +45,7 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
-const editUserService = async ({ user, date, day, month, people }, reserveId) => {
+const editReserveService = async ({ user, date, day, month, people }, reserveId) => {
 
 
   const modifiedReserve = await reservesModels.findByIdAndUpdate(reserveId,
@@ -79,20 +79,20 @@ const reserveDateService = async (reservationDay) => {
     const objetosFiltrados = allReserves.filter(objeto => {
       return objeto.date === fecha && objeto.month === month && objeto.year === year;
     });
-
+    console.log(objetosFiltrados)
      //hacemos un mapeo de los objetos encontrados donde obtenemos el valor de la fecha
-    const date = objetosFiltrados.map(objeto => objeto.date);
+    // const date = objetosFiltrados.map(objeto => objeto.date);
 
     // retornamos el nuevo array de objetos con las reservas del mes y del dia 
-    return date
+    // return date
 
   }
   //ejecutamos la funcion
   const reserveDay = searchDayAndMonth(allReserves, fecha, month, year)
   // console.log(reserveDay)
 
-  if (!reserveDay) throw new Error('no se pudo encontrar las reserva del dia - sevices')
-  return reserveDay
+  // if (!reserveDay) throw new Error('no se pudo encontrar las reserva del dia - sevices')
+  // return reserveDay
 }
 
 module.exports = {
