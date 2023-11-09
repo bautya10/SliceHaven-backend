@@ -31,11 +31,11 @@ const loginUserService = async ({ userName, email, password }) => {
   } else if (email) {
     userFounded = await User.findOne({ email })
   }
-  if (!userFounded) throw new Error('Los datos ingresados no son válidos');
+  if (!userFounded) throw new Error('no exist');
 
   const passwordMatch = await bcrypt.compare(password, userFounded.password);
 
-  if (!passwordMatch) throw new Error('Los datos ingresados no son válidos');
+  if (!passwordMatch) throw new Error('no exist');
 
   const payload = {
     userFounded,
