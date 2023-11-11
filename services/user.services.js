@@ -22,13 +22,11 @@ const registerUserService = async ({ userName, email, password, admin, suspended
 };
 
 //Loguear Usuarios
-const loginUserService = async ({ userName, email, password }) => {
+const loginUserService = async ({ email, password }) => {
   let userFounded;
   const secretKey = process.env.SECRET_KEY;
 
-  if (userName) {
-    userFounded = await User.findOne({ userName })
-  } else if (email) {
+  if (email) {
     userFounded = await User.findOne({ email })
   }
   if (!userFounded) throw new Error('no exist');
@@ -49,26 +47,21 @@ const loginUserService = async ({ userName, email, password }) => {
 };
 
 
-//Editar usuarios
-const editUserService = async ({ userName, email, password, admin, suspended, reserves }, userId) => {
-  //Hasheo del password 
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  //Crear usuario
-  const newUser = await User.findByIdAndUpdate(
-  userId,
-  {userName: userName,
-    email: email,
-    password: hashedPassword,
-    admin: admin,
-    suspended: suspended,
-    reserves: reserves
-  });
+const editUserService = async (userId, updatedData) => {
+  try {
+    if (updatedData.password) {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(updatedData.password, saltRounds);
+      updatedData.password = hashedPassword;
+    }
+    
+    const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true });
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
 
-  if ((!newUser)) throw new Error('Hubo un error al editar el usuario');
-
-  return newUser;
-}
+};
 
 //Traer todos los usuarios
 const getAllUsersService = async ({ userName, email, admin, suspended }) => {

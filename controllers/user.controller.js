@@ -22,8 +22,8 @@ const loginUsers = async (req, res) => {
 const editUser = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const updatedUserData = req.body;
-    const modifiedUser = await editUserService(updatedUserData,userId);
+    const updatedData = req.body;
+    const modifiedUser = await editUserService(userId, updatedData);
     res.status(200).json({ modifiedUser });
   } catch (error) {
     res.status(400).json(error.message);
