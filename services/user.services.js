@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const registerUserService = async ({ userName, email, password, admin, suspended }) => {
 
   const emailExist = await User.findOne({ email })
-  if (emailExist) throw new Error('exist');
+  if (emailExist) throw new Error("El correo electrónico ingresado ya está en uso, por favor ingrese otro.");
 
   // Hasheo del password
   const saltRounds = 10;
@@ -22,18 +22,20 @@ const registerUserService = async ({ userName, email, password, admin, suspended
 };
 
 //Loguear Usuarios
-const loginUserService = async ({ email, password }) => {
+const loginUserService = async ({ email, password}) => {
   let userFounded;
   const secretKey = process.env.SECRET_KEY;
 
   if (email) {
     userFounded = await User.findOne({ email })
   }
-  if (!userFounded) throw new Error('no exist');
+  if (!userFounded) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
 
   const passwordMatch = await bcrypt.compare(password, userFounded.password);
 
-  if (!passwordMatch) throw new Error('no exist');
+  if (!passwordMatch) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+
+  if (userFounded.suspended === true) throw new Error('Cuenta suspendida.');
 
   const payload = {
     userFounded,
