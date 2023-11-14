@@ -32,8 +32,8 @@ const editUser = async (req, res) => {
 // Controlador para traer usuarios
 const getAllUsers = async (req, res) => {
   try {
-    const users = await getAllUsersService(req.query)
-    res.status(200).json({ users })
+    const info = await getAllUsersService(req.query)
+    res.status(200).json({ info })
   } catch (error) {
     res.status(500).json( error.message )
   }

@@ -50,7 +50,10 @@ const loginUserService = async ({ email, password}) => {
 
 
 const editUserService = async (userId, updatedData) => {
-  try {
+    const {email} = updatedData
+    const emailExist = await User.findOne({ email })
+  if (emailExist) throw new Error("El correo electrónico ingresado ya está en uso, por favor ingrese otro.");
+
     if (updatedData.password) {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(updatedData.password, saltRounds);
@@ -59,17 +62,14 @@ const editUserService = async (userId, updatedData) => {
     
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true });
     return updatedUser;
-  } catch (error) {
-    throw error;
-  }
-
 };
 
-//Traer todos los usuarios
-const getAllUsersService = async ({ userName, email, admin, suspended }) => {
-  // Query inicial
+const getAllUsersService = async ({ userName, email, admin, suspended, page }) => {
+  const pagination = parseInt(page) || 1;
+  const perPage = 2;
+
   let query = {};
-  // Consulta de params
+
   if (userName) {
     query.userName = { $regex: new RegExp(userName, 'i') };
   }
@@ -82,16 +82,30 @@ const getAllUsersService = async ({ userName, email, admin, suspended }) => {
   if (suspended) {
     query.suspended = suspended;
   }
-  // Guardamos los usuarios encontrados
-  const users = await User.find(query).populate({
-    path: 'reserves',
-    select: 'date day month people'
-  });
-  // Si no hay resultados devolvemos un error
+
+  // Consulta para obtener el número total de usuarios
+  const totalUsers = await User.countDocuments(query);
+
+  const totalPages = Math.ceil(totalUsers / perPage);
+
+  // Consulta para obtener los usuarios de la página actual
+  const users = await User.find(query)
+    .populate({
+      path: 'reserves',
+      select: 'date day month people hours year'
+    })
+    .skip((pagination - 1) * perPage)
+    .limit(perPage);
+
   if (users.length === 0) {
     throw new Error("No se encontraron usuarios con los filtros seleccionados");
+  }
+
+  // Devuelve tanto los usuarios como el total de páginas
+  return {
+    users,
+    totalPages
   };
-  return users;
 };
 
 //Eliminar usuario
