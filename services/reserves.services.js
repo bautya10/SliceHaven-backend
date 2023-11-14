@@ -32,7 +32,10 @@ const createReserveServices = async ({user,date,day,month,people,year}) => {
 
 //obtener todas las reservas
 const allReservesServices = async () => {
-  const allReserves = await reservesModels.find();
+  const allReserves = await reservesModels.find().populate({
+    path: 'user',
+    select: 'userName'
+  });
 
   if (!allReserves) throw new Error('no se pudo encontrar las resevas - sevices')
 
@@ -46,16 +49,16 @@ const deleteReservesService = async (reserveId) => {
   return reservationRemoved;
 };
 
-const editReserveService = async ({ user, date, day, month, people }, reserveId) => {
+const editReserveService = async ({date, day, month, people, year}, reserveId) => {
 
 
   const modifiedReserve = await reservesModels.findByIdAndUpdate(reserveId,
     {
-      user: user,
       date: date,
       day: day,
       month: month,
-      people: people
+      people: people,
+      year:year
     });
 
   if ((!modifiedReserve)) throw new Error('Hubo un error al editar la reserva - service');
