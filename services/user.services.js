@@ -58,7 +58,7 @@ const editUserService = async (userId, updatedData) => {
 
 const getAllUsersService = async ({ userName, page }) => {
   const pagination = parseInt(page) || 1;
-  const perPage = 8;
+  const perPage = 20;
 
   let query = {};
   if (userName) {
