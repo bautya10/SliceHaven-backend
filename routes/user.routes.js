@@ -5,15 +5,10 @@ const route = express();
 const { validateSchema } = require("../middleware/validateSchemas");
 const { registerSchema, loginSchema } = require("../schemas/auth.schema");
 
-// Ruta para obtener todos los usuarios
 route.get('/', jwtValidator, getAllUsers);
-// Ruta para crear un nuevo usuario
 route.post('/register', validateSchema(registerSchema), registerUser);
-// Ruta para editar un usuario
 route.patch('/:userId', editUser); 
-// Ruta para loguear usuarios
-route.post('/login', validateSchema(loginSchema), loginUsers)
-// Ruta para eliminar usuarios
-route.delete('/:userId', deleteUser)
+route.post('/login', validateSchema(loginSchema), loginUsers);
+route.delete('/:userId', deleteUser); 
 
 module.exports = route;
