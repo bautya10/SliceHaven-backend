@@ -1,5 +1,4 @@
-//modelos necesarios
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const reservesSchema = new Schema({
   user: {
@@ -9,7 +8,7 @@ const reservesSchema = new Schema({
   },
   date: {
     type: String,
-    required: true
+    required: true,
   },
   day: {
     type: Number,
@@ -27,8 +26,6 @@ const reservesSchema = new Schema({
     type: Number,
     required: true,
   },
+});
 
-  
-})
-
-module.exports= model('reserves', reservesSchema)
+module.exports = model("reserves", reservesSchema);
