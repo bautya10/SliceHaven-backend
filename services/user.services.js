@@ -30,15 +30,16 @@ const loginUserService = async ({ email, password}) => {
   if (!passwordMatch) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
   if (userFounded.suspended === true) throw new Error('Cuenta suspendida.');
 
-  const { password, ...userWithoutPassword } = userFounded.toObject();
-  
+  delete userFounded.password
+
   const payload = {
-    userFounded: userWithoutPassword,
-  };
+    userFounded,
+  }
   const token = await jwt.sign(payload, secretKey, {
     expiresIn: '10h'
   });
-  return { token, userFounded: userWithoutPassword };
+
+  return { token, userFounded }
 };
 
 
