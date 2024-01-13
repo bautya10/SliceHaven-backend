@@ -30,7 +30,7 @@ const loginUserService = async ({ email, password}) => {
   if (!passwordMatch) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
   if (userFounded.suspended === true) throw new Error('Cuenta suspendida.');
 
-  delete userFounded.password
+  delete userFounded.password;
 
   const payload = {
     userFounded,
