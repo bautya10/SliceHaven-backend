@@ -23,14 +23,12 @@ const loginUserService = async ({ email, password}) => {
   const secretKey = process.env.SECRET_KEY;
 
   if (email) {
-    userFounded = await User.findOne({ email })
+    userFounded = await User.findOne({ email }).select('-password');
   }
   if (!userFounded) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
   const passwordMatch = await bcrypt.compare(password, userFounded.password);
   if (!passwordMatch) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
   if (userFounded.suspended === true) throw new Error('Cuenta suspendida.');
-
-  delete userFounded.password;
 
   const payload = {
     userFounded,
